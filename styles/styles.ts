@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
 import Colors from "../constant/Colors";
-import { ScreenContainer } from "react-native-screens";
 
 const styles = StyleSheet.create({
   container: {
@@ -8,6 +7,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: Colors.backgroundColor,
     paddingTop: 50,
+    paddingBottom: 150,
   },
   button: {
     backgroundColor: Colors.buttonColor,
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     paddingVertical: 40,
     paddingHorizontal: 25,
     marginVertical: 5,
-    borderRadius: 30,
+    borderRadius: 10,
   },
   cityName: {
     fontSize: 28,
@@ -83,6 +83,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     color: Colors.textColor,
+  },
+  cityItem: {
+    padding: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.borderColor,
   },
 });
 

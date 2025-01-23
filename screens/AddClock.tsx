@@ -1,74 +1,39 @@
-import React, { useState } from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { View, TextInput, Button, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, ScrollView, TouchableOpacity, Text } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../styles/styles';
-import { getAllCitiesTime } from '../utils/TimeUtils';
-import { popularCities } from '../data/Zone';
-import ClockCard from './ClockCard';
+import { citiesData } from '../data/cities';
 
-const Stack = createStackNavigator();
+export default function AddClock({ navigation }: any) {
+    const [addedCities, setAddedCities] = useState<{ city: string, country: string }[]>([]);
 
-function AddCityScreen({ navigation }: any) {
-    const [newCity, setNewCity] = useState<string>('');
-    const [newCountry, setNewCountry] = useState<string>('');
+    useEffect(() => {
+        const loadAddedCities = async () => {
+            const storedCities = await AsyncStorage.getItem('addedCities');
+            if (storedCities) {
+                setAddedCities(JSON.parse(storedCities));
+            }
+        };
+        loadAddedCities();
+    }, []);
 
-    const addCity = () => {
-        if (newCity && newCountry) {
-            navigation.navigate('ClockList', { city: newCity, country: newCountry });
-            setNewCity('');
-            setNewCountry('');
-        }
+    const availableCities = citiesData.filter(
+        (city) => !addedCities.some((addedCity) => addedCity.city === city.city)
+    );
+
+    const addCity = async (city: string, country: string) => {
+        const newCities = [...addedCities, { city, country }];
+        await AsyncStorage.setItem('addedCities', JSON.stringify(newCities));
+        navigation.navigate('WorldClock', { city, country });
     };
 
     return (
-        <View style={styles.container}>
-            <TextInput
-                style={styles.input}
-                placeholder="City"
-                value={newCity}
-                onChangeText={setNewCity}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Country Code"
-                value={newCountry}
-                onChangeText={setNewCountry}
-            />
-            <Button title="Add City" onPress={addCity} />
-        </View>
-    );
-}
-
-function ClockListScreen({ route }: any) {
-    const [cityTimes, setCityTimes] = useState<Record<string, string | null>>({});
-
-    React.useEffect(() => {
-        const times = getAllCitiesTime(popularCities);
-        setCityTimes(times);
-    }, []);
-
-    React.useEffect(() => {
-        if (route.params?.city && route.params?.country) {
-            const updatedCities = [...popularCities, { city: route.params.city, country: route.params.country }];
-            const times = getAllCitiesTime(updatedCities);
-            setCityTimes(times);
-        }
-    }, [route.params?.city, route.params?.country]);
-
-    return (
         <ScrollView style={styles.container}>
-            {Object.entries(cityTimes).map(([city, time]) => (
-                <ClockCard key={city} city={city} time={time} />
+            {availableCities.map((city, index) => (
+                <TouchableOpacity key={index} style={styles.cityItem} onPress={() => addCity(city.city, city.country)}>
+                    <Text style={styles.cityName}>{city.city}, {city.name}</Text>
+                </TouchableOpacity>
             ))}
         </ScrollView>
-    );
-}
-
-export default function AddClock() {
-    return (
-        <Stack.Navigator initialRouteName="ClockList">
-            <Stack.Screen name="ClockList" component={ClockListScreen} />
-            <Stack.Screen name="AddCity" component={AddCityScreen} />
-        </Stack.Navigator>
     );
 }

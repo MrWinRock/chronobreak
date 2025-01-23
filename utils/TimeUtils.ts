@@ -11,7 +11,7 @@ export function getTimeByCountry(countryCode: any) {
   if (!country || !country.timezones.length) return null;
 
   const timezone = country.timezones[0];
-  return moment.tz(timezone).format("HH:mm:ss");
+  return moment.tz(timezone).format("HH:mm");
 }
 
 /**
