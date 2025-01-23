@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: Colors.backgroundColor,
     paddingTop: 50,
-    // alignItems: "center",
   },
   button: {
     backgroundColor: Colors.buttonColor,
@@ -35,19 +34,54 @@ const styles = StyleSheet.create({
     backgroundColor: "#89b9fe",
   },
   timeContainer: {
+    backgroundColor: Colors.cardColor,
     flexDirection: "row",
     justifyContent: "space-between",
+    paddingVertical: 40,
+    paddingHorizontal: 25,
+    marginVertical: 5,
+    borderRadius: 30,
+  },
+  cityName: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: Colors.textCardColor,
+  },
+  timeDisplay: {
+    fontSize: 36,
+    fontWeight: "bold",
+    color: Colors.textCardColor,
+  },
+  headerContainer: {
     padding: 10,
-    borderBottomWidth: 1,
-    // borderBottomColor: Colors.borderColor,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  header: {
+    fontSize: 36,
+    fontWeight: "bold",
+    color: Colors.textColor,
+  },
+  headerButton: {
+    padding: 10,
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  headerButtonText: {
+    color: Colors.textColor,
+    fontSize: 36,
+    fontWeight: 700,
+  },
+  input: {
+    height: 40,
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
   },
   countryCode: {
     fontSize: 16,
     fontWeight: "bold",
-    color: Colors.textColor,
-  },
-  time: {
-    fontSize: 16,
     color: Colors.textColor,
   },
 });

@@ -4,9 +4,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { View } from 'react-native';
 import Stopwatch from '../screens/Stopwatch';
 import Alarm from '../screens/Alarm';
-import WorldClock from '../screens/WorldClock';
 import Timer from '../screens/Timer';
 import TimeZoneConverter from '../screens/TimeZoneConverter';
+import WorldClockNavigator from './WorldClockNavigator';
 import styles from '../styles/styles';
 
 const Tab = createBottomTabNavigator();
@@ -51,12 +51,13 @@ export default function MainNavigator() {
                     fontFamily: 'Poppins_700Bold',
                 },
 
-                headerShown: false,
+                headerShown: false
             })}
+            initialRouteName="World Clock"
         >
             <Tab.Screen name="Stopwatch" component={Stopwatch} />
             <Tab.Screen name="Alarm" component={Alarm} />
-            <Tab.Screen name="World Clock" component={WorldClock} />
+            <Tab.Screen name="World Clock" component={WorldClockNavigator} />
             <Tab.Screen name="Timer" component={Timer} />
             <Tab.Screen name="TimeZone Converter" component={TimeZoneConverter} />
         </Tab.Navigator>
