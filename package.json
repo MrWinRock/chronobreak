@@ -11,9 +11,13 @@
   "dependencies": {
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
+    "countries-and-timezones": "^3.7.2",
+    "date-and-time": "^3.6.0",
+    "date-fns-tz": "^3.2.0",
     "expo": "~52.0.25",
     "expo-font": "^13.0.3",
     "expo-status-bar": "~2.0.1",
+    "moment-timezone": "^0.5.46",
     "react": "18.3.1",
     "react-native": "0.76.6",
     "react-native-reanimated": "~3.16.1",

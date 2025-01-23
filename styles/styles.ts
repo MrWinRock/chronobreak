@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: Colors.backgroundColor,
     paddingTop: 50,
-    alignItems: "center",
+    // alignItems: "center",
   },
   button: {
     backgroundColor: Colors.buttonColor,
@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
   text: {
     color: Colors.textColor,
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 700,
+    fontFamily: "Popins",
   },
   worldClockIcon: {
     backgroundColor: Colors.secondaryColor,
@@ -32,6 +33,22 @@ const styles = StyleSheet.create({
   },
   worldClockIconFocused: {
     backgroundColor: "#89b9fe",
+  },
+  timeContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 10,
+    borderBottomWidth: 1,
+    // borderBottomColor: Colors.borderColor,
+  },
+  countryCode: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: Colors.textColor,
+  },
+  time: {
+    fontSize: 16,
+    color: Colors.textColor,
   },
 });
 

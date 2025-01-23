@@ -39,7 +39,7 @@ export default function MainNavigator() {
                     );
                 },
                 tabBarActiveTintColor: '#000',
-                tabBarInactiveTintColor: '#ddd',
+                tabBarInactiveTintColor: '#a9a9a9',
                 tabBarStyle: {
                     height: 70,
                     paddingTop: 7,
@@ -48,6 +48,7 @@ export default function MainNavigator() {
                     width: '100%',
                     textAlign: 'center',
                     fontSize: 12,
+                    fontFamily: 'Poppins_700Bold',
                 },
 
                 headerShown: false,
