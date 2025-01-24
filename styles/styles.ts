@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     color: Colors.textColor,
     fontSize: 20,
     fontWeight: 700,
-    fontFamily: "Popins",
+    fontFamily: "Poppins",
   },
   worldClockIcon: {
     backgroundColor: Colors.secondaryColor,
@@ -33,6 +33,8 @@ const styles = StyleSheet.create({
   worldClockIconFocused: {
     backgroundColor: "#89b9fe",
   },
+
+  // World Clock Screen
   timeContainer: {
     width: "100%",
     backgroundColor: Colors.cardColor,

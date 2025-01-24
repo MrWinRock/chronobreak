@@ -59,7 +59,7 @@ export default function MainNavigator() {
             <Tab.Screen name="Alarm" component={Alarm} />
             <Tab.Screen name="World Clock" component={WorldClockNavigator} />
             <Tab.Screen name="Timer" component={Timer} />
-            <Tab.Screen name="TimeZone Converter" component={TimeZoneConverter} />
+            <Tab.Screen name="TimeZone" component={TimeZoneConverter} />
         </Tab.Navigator>
     );
 }
