@@ -18,6 +18,8 @@ export default function WorldClock() {
     const [cityTimes, setCityTimes] = useState<Record<string, string | null>>({});
     const [refreshing, setRefreshing] = useState(false);
     const [cities, setCities] = useState(defaultCity);
+    const [deletingCity, setDeletingCity] = useState<string | null>(null);
+    const [showDeleteButtons, setShowDeleteButtons] = useState(false);
 
     const loadCityTimes = useCallback(() => {
         const times = getAllCitiesTime(cities);
@@ -42,10 +44,17 @@ export default function WorldClock() {
         setRefreshing(false);
     }, [loadCityTimes]);
 
-    const deleteCity = async (city: string) => {
+    const toggleDeleteButtons = () => {
+        setShowDeleteButtons(!showDeleteButtons);
+        setDeletingCity(null);
+    };
+
+    const handleDeleteCity = async (city: string) => {
         const newCities = cities.filter((c) => c.city !== city);
         await AsyncStorage.setItem('addedCities', JSON.stringify(newCities));
         setCities(newCities);
+        setDeletingCity(null);
+        setShowDeleteButtons(false);
     };
 
     return (
@@ -59,13 +68,20 @@ export default function WorldClock() {
                     <TouchableOpacity style={styles.headerButton} onPress={() => navigation.navigate('AddClock')}>
                         <Ionicons name="add-outline" style={styles.headerButtonText}></Ionicons>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.headerButton} onPress={() => deleteCity('')}>
+                    <TouchableOpacity style={styles.headerButton} onPress={toggleDeleteButtons}>
                         <Ionicons name="trash-bin-outline" style={styles.headerButtonText}></Ionicons>
                     </TouchableOpacity>
                 </View>
             </View>
             {Object.entries(cityTimes).map(([city, time]) => (
-                <ClockCard key={city} city={city} time={time} />
+                <ClockCard
+                    key={city}
+                    city={city}
+                    time={time}
+                    deleting={deletingCity === city}
+                    onConfirmDelete={() => handleDeleteCity(city)}
+                    showDeleteButton={showDeleteButtons}
+                />
             ))}
             <View style={{ height: 100 }} />
         </ScrollView>

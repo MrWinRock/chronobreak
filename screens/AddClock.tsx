@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, TouchableOpacity, Text } from 'react-native';
+import { ScrollView, TouchableOpacity, Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../styles/styles';
 import { citiesData } from '../data/cities';
@@ -29,6 +29,9 @@ export default function AddClock({ navigation }: any) {
 
     return (
         <ScrollView style={styles.container}>
+            <TouchableOpacity style={{ backgroundColor: "transparent", paddingRight: 20 }} onPress={() => navigation.goBack()}>
+                <Text style={{ fontSize: 36, color: "#fff", fontWeight: 500, textAlign: "right" }}>Cancel</Text>
+            </TouchableOpacity>
             {availableCities.map((city, index) => (
                 <TouchableOpacity key={index} style={styles.cityItem} onPress={() => addCity(city.city, city.country)}>
                     <Text style={styles.cityName}>{city.city}, {city.name}</Text>
