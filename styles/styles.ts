@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 20,
     borderRadius: 10,
-    height: 1000,
+    maxHeight: 360,
   },
   convertedTimeContainer: {
     marginVertical: 10,
@@ -164,43 +164,47 @@ const styles = StyleSheet.create({
     height: 150,
   },
   timeSelectorContainer: {
-    padding: 30,
+    padding: 10,
     borderRadius: 10,
-    marginTop: 100,
-    marginBottom: 10,
   },
   wheelContainer: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
   },
-  wheelWrapper: {
-    backgroundColor: "#7ab2d3", // Background for the picker
-    borderRadius: 10, // Rounded corners
-    overflow: "hidden", // Ensure rounded corners are applied
-  },
   scrollView: {
-    height: 120,
+    height: 180,
     width: 100,
   },
+  scrollViewContent: {
+    paddingVertical: 60,
+  },
   scrollItem: {
-    height: 40,
+    height: 60,
     justifyContent: "center",
     alignItems: "center",
   },
   selectedItemText: {
-    fontSize: 24,
+    fontSize: 50,
     fontWeight: "bold",
-    color: "#FFFFFF", // Highlighted text color
+    color: "#fff",
   },
   itemText: {
-    fontSize: 20,
-    color: "#B0C4DE", // Dimmed text color for unselected items
+    fontSize: 50,
+    fontWeight: "bold",
+    color: "#a3cae0",
   },
   colon: {
     fontSize: 40,
-    color: "#000",
+    color: "#fff",
+    fontWeight: "900",
     marginHorizontal: 10,
+  },
+  timezoneMain: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 20,
   },
 });
 

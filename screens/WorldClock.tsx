@@ -3,13 +3,13 @@ import { View, Text, ScrollView, TouchableOpacity, RefreshControl } from 'react-
 import { useNavigation, NavigationProp, useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAllCitiesTime } from '../utils/TimeUtils';
-import { defaultCity, citiesData } from '../data/cities';
+import { defaultCity } from '../data/cities';
 import ClockCard from '../components/ClockCard';
 import { Ionicons } from '@expo/vector-icons';
 import styles from '../styles/styles';
 
 type RootStackParamList = {
-    AddClock: undefined;
+    AddClock: { fromScreen: string };
 };
 
 export default function WorldClock() {
@@ -65,7 +65,7 @@ export default function WorldClock() {
             <View style={styles.headerContainer}>
                 <Text style={styles.header}>World Clock</Text>
                 <View style={{ flexDirection: 'row' }}>
-                    <TouchableOpacity style={styles.headerButton} onPress={() => navigation.navigate('AddClock')}>
+                    <TouchableOpacity style={styles.headerButton} onPress={() => navigation.navigate('AddClock', { fromScreen: 'WorldClock' })}>
                         <Ionicons name="add-outline" style={styles.headerButtonText}></Ionicons>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.headerButton} onPress={toggleDeleteButtons}>
