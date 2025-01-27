@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import Colors from "../constant/Colors";
+import TimeSelector from "../components/TimeSelector";
 
 const styles = StyleSheet.create({
   container: {
@@ -46,8 +47,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   cityName: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "bold",
+    padding: 5,
     color: Colors.textCardColor,
   },
   timeDisplay: {
@@ -114,6 +116,91 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 24,
     fontWeight: "700",
+  },
+
+  // Time Zone Converter
+  picker: {
+    height: 50,
+    width: "100%",
+    color: Colors.textColor,
+    fontSize: 36,
+    fontWeight: "bold",
+    marginVertical: 20,
+  },
+  timezoneContainer: {
+    marginTop: 20,
+    backgroundColor: Colors.cardColor,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    height: 1000,
+  },
+  convertedTimeContainer: {
+    marginVertical: 10,
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
+    paddingBottom: 10,
+  },
+  convertedText: {
+    fontSize: 26,
+    fontWeight: "bold",
+    color: "#000",
+  },
+  convertedTime: {
+    fontSize: 32,
+    fontWeight: "500",
+    color: "#000",
+  },
+  timePickerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginVertical: 20,
+  },
+  timePicker: {
+    flex: 1,
+    height: 150,
+  },
+  timeSelectorContainer: {
+    padding: 30,
+    borderRadius: 10,
+    marginTop: 100,
+    marginBottom: 10,
+  },
+  wheelContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  wheelWrapper: {
+    backgroundColor: "#7ab2d3", // Background for the picker
+    borderRadius: 10, // Rounded corners
+    overflow: "hidden", // Ensure rounded corners are applied
+  },
+  scrollView: {
+    height: 120,
+    width: 100,
+  },
+  scrollItem: {
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  selectedItemText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#FFFFFF", // Highlighted text color
+  },
+  itemText: {
+    fontSize: 20,
+    color: "#B0C4DE", // Dimmed text color for unselected items
+  },
+  colon: {
+    fontSize: 40,
+    color: "#000",
+    marginHorizontal: 10,
   },
 });
 

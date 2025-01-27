@@ -4,7 +4,7 @@ import { useNavigation, NavigationProp, useIsFocused } from '@react-navigation/n
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAllCitiesTime } from '../utils/TimeUtils';
 import { defaultCity, citiesData } from '../data/cities';
-import ClockCard from './ClockCard';
+import ClockCard from '../components/ClockCard';
 import { Ionicons } from '@expo/vector-icons';
 import styles from '../styles/styles';
 
