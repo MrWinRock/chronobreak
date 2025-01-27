@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import Colors from "../constant/Colors";
+import TimeSelector from "../components/TimeSelector";
 
 const styles = StyleSheet.create({
   container: {
@@ -46,8 +47,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   cityName: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "bold",
+    padding: 5,
     color: Colors.textCardColor,
   },
   timeDisplay: {
@@ -114,6 +116,95 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 24,
     fontWeight: "700",
+  },
+
+  // Time Zone Converter
+  picker: {
+    height: 50,
+    width: "100%",
+    color: Colors.textColor,
+    fontSize: 36,
+    fontWeight: "bold",
+    marginVertical: 20,
+  },
+  timezoneContainer: {
+    marginTop: 20,
+    backgroundColor: Colors.cardColor,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    maxHeight: 360,
+  },
+  convertedTimeContainer: {
+    marginVertical: 10,
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
+    paddingBottom: 10,
+  },
+  convertedText: {
+    fontSize: 26,
+    fontWeight: "bold",
+    color: "#000",
+  },
+  convertedTime: {
+    fontSize: 32,
+    fontWeight: "500",
+    color: "#000",
+  },
+  timePickerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginVertical: 20,
+  },
+  timePicker: {
+    flex: 1,
+    height: 150,
+  },
+  timeSelectorContainer: {
+    padding: 10,
+    borderRadius: 10,
+  },
+  wheelContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  scrollView: {
+    height: 180,
+    width: 100,
+  },
+  scrollViewContent: {
+    paddingVertical: 60,
+  },
+  scrollItem: {
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  selectedItemText: {
+    fontSize: 50,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  itemText: {
+    fontSize: 50,
+    fontWeight: "bold",
+    color: "#a3cae0",
+  },
+  colon: {
+    fontSize: 40,
+    color: "#fff",
+    fontWeight: "900",
+    marginHorizontal: 10,
+  },
+  timezoneMain: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 20,
   },
 });
 
