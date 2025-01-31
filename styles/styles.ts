@@ -206,6 +206,58 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
   },
+
+  // Timer
+  timerDisplayContainer: {
+    padding: 20,
+    borderRadius: 10,
+    height: 300,
+  },
+  timerDisplay: {
+    marginTop: 60,
+    fontSize: 50,
+    fontWeight: "bold",
+    color: Colors.textColor,
+    textAlign: "center",
+    marginVertical: 20,
+  },
+  timerButtonContainer: {
+    flexDirection: "row",
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  timerRunningButtonContainer: {
+    flexDirection: "row",
+    padding: 10,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  timerButton: {
+    backgroundColor: Colors.buttonColor,
+    padding: 20,
+    margin: 10,
+    borderRadius: 50,
+    width: 100,
+    height: 100,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  timerButtonDelete: {
+    backgroundColor: "#c91d1d",
+    padding: 20,
+    margin: 10,
+    borderRadius: 50,
+    width: 100,
+    height: 100,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  timerButtonText: {
+    color: Colors.textColor,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
 });
 
 export default styles;
