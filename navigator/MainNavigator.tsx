@@ -5,9 +5,9 @@ import { View } from 'react-native';
 import Stopwatch from '../screens/Stopwatch';
 import Alarm from '../screens/Alarm';
 import Timer from '../screens/Timer';
-import TimeZoneConverter from '../screens/TimeZoneConverter';
 import WorldClockNavigator from './WorldClockNavigator';
 import styles from '../styles/styles';
+import TimeZoneNavigator from './TimeZoneNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -59,7 +59,7 @@ export default function MainNavigator() {
             <Tab.Screen name="Alarm" component={Alarm} />
             <Tab.Screen name="World Clock" component={WorldClockNavigator} />
             <Tab.Screen name="Timer" component={Timer} />
-            <Tab.Screen name="TimeZone" component={TimeZoneConverter} />
+            <Tab.Screen name="TimeZone" component={TimeZoneNavigator} />
         </Tab.Navigator>
     );
 }

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, TouchableOpacity, Text } from 'react-native';
+import { ScrollView, TouchableOpacity, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../styles/styles';
 import { citiesData } from '../data/cities';
 
-export default function AddClock({ navigation }: any) {
+export default function AddClock({ navigation, route }: any) {
     const [addedCities, setAddedCities] = useState<{ city: string, country: string }[]>([]);
+    const { fromScreen } = route.params;
 
     useEffect(() => {
         const loadAddedCities = async () => {
@@ -24,7 +25,7 @@ export default function AddClock({ navigation }: any) {
     const addCity = async (city: string, country: string) => {
         const newCities = [...addedCities, { city, country }];
         await AsyncStorage.setItem('addedCities', JSON.stringify(newCities));
-        navigation.navigate('WorldClock', { city, country });
+        navigation.navigate(fromScreen, { city, country });
     };
 
     return (
@@ -32,11 +33,13 @@ export default function AddClock({ navigation }: any) {
             <TouchableOpacity style={{ backgroundColor: "transparent", paddingRight: 20 }} onPress={() => navigation.goBack()}>
                 <Text style={{ fontSize: 36, color: "#fff", fontWeight: 500, textAlign: "right" }}>Cancel</Text>
             </TouchableOpacity>
-            {availableCities.map((city, index) => (
-                <TouchableOpacity key={index} style={styles.cityItem} onPress={() => addCity(city.city, city.country)}>
-                    <Text style={styles.cityName}>{city.city}, {city.name}</Text>
-                </TouchableOpacity>
-            ))}
+            <View style={{ marginBottom: 100 }}>
+                {availableCities.map((city, index) => (
+                    <TouchableOpacity key={index} style={styles.cityItem} onPress={() => addCity(city.city, city.country)}>
+                        <Text style={styles.cityName}>{city.city}, {city.name}</Text>
+                    </TouchableOpacity>
+                ))}
+            </View>
         </ScrollView>
     );
 }

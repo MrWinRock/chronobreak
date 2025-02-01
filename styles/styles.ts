@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import Colors from "../constant/Colors";
+import TimeSelector from "../components/TimeSelector";
 
 const styles = StyleSheet.create({
   container: {
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#89b9fe",
   },
 
-  // World Clock Screen
+  // World Clock Screen #0ff
   timeContainer: {
     width: "100%",
     backgroundColor: Colors.cardColor,
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 
-  // Time Zone Converter
+  // Time Zone Converter #
   picker: {
     height: 50,
     width: "100%",
@@ -213,7 +214,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
 
-  // Timer
+  // Timer #0ff
   timerDisplayContainer: {
     padding: 20,
     borderRadius: 10,
@@ -228,6 +229,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   timerButtonContainer: {
+    marginTop: 50,
     flexDirection: "row",
     padding: 10,
     justifyContent: "center",
@@ -236,6 +238,7 @@ const styles = StyleSheet.create({
   timerRunningButtonContainer: {
     flexDirection: "row",
     padding: 10,
+    width: "100%",
     justifyContent: "space-between",
     alignItems: "center",
   },
@@ -346,6 +349,20 @@ const styles = StyleSheet.create({
   },
   flatListContainer: {
     width: "100%",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  hmsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: 340,
+    marginVertical: 10,
+  },
+  hmsText: {
+    fontSize: 22,
+    fontWeight: "bold",
+    justifyContent: "space-between",
+    color: Colors.textColor,
   },
 });
 

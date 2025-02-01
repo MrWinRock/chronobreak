@@ -18,17 +18,20 @@ export function getTimeByCountry(countryCode: any) {
  * Gets the current time for a given city's timezone.
  * @param {string} city - The city name.
  * @param {string} countryCode - The ISO country code.
+ * @param {Date} [time] - The specific time to convert.
  * @returns {string | null} The formatted time or null if the city is not found.
  */
 export function getTimeByCity(
   city: string,
-  countryCode: string
+  countryCode: string,
+  time?: Date
 ): string | null {
   const country = ct.getCountry(countryCode);
   if (!country || !country.timezones.length) return null;
 
   const timezone = country.timezones[0];
-  return moment.tz(timezone).format("HH:mm");
+  const momentTime = time ? moment(time) : moment();
+  return momentTime.tz(timezone).format("HH:mm");
 }
 
 /**
