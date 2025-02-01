@@ -9,6 +9,13 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingBottom: 150,
   },
+  stopwatchContainer: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: Colors.backgroundColor,
+    paddingTop: 50,
+    paddingBottom: 50,
+  },
   button: {
     backgroundColor: Colors.buttonColor,
   },
@@ -46,8 +53,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   cityName: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "bold",
+    padding: 5,
     color: Colors.textCardColor,
   },
   timeDisplay: {
@@ -114,6 +122,230 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 24,
     fontWeight: "700",
+  },
+
+  // Time Zone Converter
+  picker: {
+    height: 50,
+    width: "100%",
+    color: Colors.textColor,
+    fontSize: 36,
+    fontWeight: "bold",
+    marginVertical: 20,
+  },
+  timezoneContainer: {
+    marginTop: 20,
+    backgroundColor: Colors.cardColor,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    maxHeight: 360,
+  },
+  convertedTimeContainer: {
+    marginVertical: 10,
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
+    paddingBottom: 10,
+  },
+  convertedText: {
+    fontSize: 26,
+    fontWeight: "bold",
+    color: "#000",
+  },
+  convertedTime: {
+    fontSize: 32,
+    fontWeight: "500",
+    color: "#000",
+  },
+  timePickerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginVertical: 20,
+  },
+  timePicker: {
+    flex: 1,
+    height: 150,
+  },
+  timeSelectorContainer: {
+    padding: 10,
+    borderRadius: 10,
+  },
+  wheelContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  scrollView: {
+    height: 180,
+    width: 100,
+  },
+  scrollViewContent: {
+    paddingVertical: 60,
+  },
+  scrollItem: {
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  selectedItemText: {
+    fontSize: 50,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  itemText: {
+    fontSize: 50,
+    fontWeight: "bold",
+    color: "#a3cae0",
+  },
+  colon: {
+    fontSize: 40,
+    color: "#fff",
+    fontWeight: "900",
+    marginHorizontal: 10,
+  },
+  timezoneMain: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 20,
+  },
+
+  // Timer
+  timerDisplayContainer: {
+    padding: 20,
+    borderRadius: 10,
+    height: 300,
+  },
+  timerDisplay: {
+    marginTop: 60,
+    fontSize: 50,
+    fontWeight: "bold",
+    color: Colors.textColor,
+    textAlign: "center",
+    marginVertical: 20,
+  },
+  timerButtonContainer: {
+    flexDirection: "row",
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  timerRunningButtonContainer: {
+    flexDirection: "row",
+    padding: 10,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  timerButton: {
+    backgroundColor: Colors.buttonColor,
+    padding: 20,
+    margin: 10,
+    borderRadius: 50,
+    width: 100,
+    height: 100,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  timerButtonDelete: {
+    backgroundColor: "#c91d1d",
+    padding: 20,
+    margin: 10,
+    borderRadius: 50,
+    width: 100,
+    height: 100,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  timerButtonText: {
+    color: Colors.textColor,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+
+  // Stopwatch #0ff
+  timerContainer: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 200,
+    marginBottom: 50,
+    borderRadius: 10,
+  },
+  timer: {
+    fontSize: 70,
+    fontWeight: "700",
+    fontFamily: "Inter-Bold",
+    color: "#fff",
+    textAlign: "left",
+  },
+  buttonRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    alignItems: "center",
+    marginBottom: 50,
+  },
+  stopwatchButton: {
+    paddingVertical: 15,
+    paddingHorizontal: 25,
+    borderRadius: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 100,
+    height: 100,
+    marginHorizontal: 10,
+  },
+  startButton: {
+    backgroundColor: "#1E90FF",
+  },
+  stopButton: {
+    backgroundColor: "#FF4500",
+  },
+  lapButton: {
+    backgroundColor: "#A9D7E7CC",
+  },
+  resetButton: {
+    backgroundColor: "#A9D7E7CC",
+  },
+  buttonStart: {
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#fff",
+  },
+  buttonLap: {
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#3d6a76",
+  },
+  lapContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginVertical: 10,
+  },
+  lapText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  separator: {
+    height: 1,
+    width: "100%",
+    backgroundColor: "#fff",
+    marginTop: 5,
+  },
+  separatorContainer: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  flatListContainer: {
+    width: "100%",
   },
 });
 

@@ -4,17 +4,18 @@ import {
   Text,
   TouchableOpacity,
   FlatList,
-  StyleSheet,
 } from "react-native";
 
-const Stopwatch = () => {
+import styles from "../styles/styles";
+
+export default function Stopwatch() {
   const [time, setTime] = useState(0);
-  const [running, setRunning] = useState(false);
+  const [isRunning, setIsRunning] = useState(false);
   const [laps, setLaps] = useState<number[]>([]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const startStop = () => {
-    if (running) {
+    if (isRunning) {
       if (timerRef.current !== null) {
         clearInterval(timerRef.current);
       }
@@ -24,7 +25,7 @@ const Stopwatch = () => {
         setTime(Date.now() - startTime);
       }, 10);
     }
-    setRunning(!running);
+    setIsRunning(!isRunning);
   };
 
   const reset = () => {
@@ -33,11 +34,11 @@ const Stopwatch = () => {
     }
     setTime(0);
     setLaps([]);
-    setRunning(false);
+    setIsRunning(false);
   };
 
   const recordLap = () => {
-    if (running) {
+    if (isRunning) {
       setLaps([...laps, time]);
     }
   };
@@ -53,19 +54,21 @@ const Stopwatch = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.timer}>{formatTime(time)}</Text>
+    <View style={styles.stopwatchContainer}>
+      <View style={styles.timerContainer}>
+        <Text style={styles.timer}>{formatTime(time)}</Text>
+      </View>
       <View style={styles.buttonRow}>
-        {running ? (
+        {isRunning ? (
           <TouchableOpacity
-            style={[styles.button, styles.lapButton]}
+            style={[styles.stopwatchButton, styles.lapButton]}
             onPress={recordLap}
           >
             <Text style={styles.buttonLap}>Lap</Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
-            style={[styles.button, styles.resetButton]}
+            style={[styles.stopwatchButton, styles.resetButton]}
             onPress={reset}
           >
             <Text style={styles.buttonLap}>Reset</Text>
@@ -73,101 +76,33 @@ const Stopwatch = () => {
         )}
         <TouchableOpacity
           style={[
-            styles.button,
-            running ? styles.stopButton : styles.startButton,
+            styles.stopwatchButton,
+            isRunning ? styles.stopButton : styles.startButton,
           ]}
           onPress={startStop}
         >
-          <Text style={styles.buttonStart}>{running ? "Stop" : "Start"}</Text>
+          <Text style={styles.buttonStart}>{isRunning ? "Stop" : "Start"}</Text>
         </TouchableOpacity>
       </View>
       <FlatList
         data={laps}
         renderItem={({ item, index }) => (
-          <View style={styles.lapContainer}>
-            <Text style={styles.lapText}>
-              Lap {index + 1}: {formatTime(item)}
-            </Text>
-            <View style={styles.separator} />
+          <View style={styles.flatListContainer}>
+            <View style={styles.lapContainer}>
+              <Text style={styles.lapText}>
+                Lap {index + 1}
+              </Text>
+              <Text style={styles.lapText}>
+                {formatTime(item)}
+              </Text>
+            </View>
+            <View style={styles.separatorContainer} >
+              <View style={styles.separator} />
+            </View>
           </View>
         )}
         keyExtractor={(item, index) => index.toString()}
       />
-    </View>
+    </View >
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#7ab2d3",
-  },
-  timer: {
-    marginTop: 250,
-    fontSize: 70,
-    fontWeight: "700",
-    fontFamily: "Inter-Bold",
-    color: "#fff",
-    textAlign: "left",
-  },
-  buttonRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-    alignItems: "center",
-    marginTop: 20,
-  },
-  button: {
-    paddingVertical: 15,
-    paddingHorizontal: 25,
-    borderRadius: 30,
-    marginHorizontal: 10,
-    borderWidth: 2, // เพิ่มกรอบให้ปุ่ม
-    borderColor: "#fff", // สีกรอบปุ่ม
-  },
-  startButton: {
-    backgroundColor: "#1E90FF",
-  },
-  stopButton: {
-    backgroundColor: "#FF4500",
-  },
-  lapButton: {
-    backgroundColor: "#A9D7E7CC", // สีปุ่ม Lap
-  },
-  resetButton: {
-    backgroundColor: "#A9D7E7CC", // สีปุ่ม Reset
-  },
-  buttonStart: {
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "#fff",
-  },
-  buttonLap: {
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "#3d6a76",
-  },
-  lapContainer: {
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginVertical: 10,
-    width: "100%",
-  },
-  lapText: {
-    fontSize: 20,
-    width: "100%",
-    color: "#fff",
-  },
-  separator: {
-    height: 1,
-    width: "90%",
-    backgroundColor: "#fff",
-    marginTop: 5,
-  },
-});
-
-export default Stopwatch;
