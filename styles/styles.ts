@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#89b9fe",
   },
 
-  // World Clock Screen
+  // World Clock Screen #0ff
   timeContainer: {
     width: "100%",
     backgroundColor: Colors.cardColor,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 
-  // Time Zone Converter
+  // Time Zone Converter #0ff
   picker: {
     height: 50,
     width: "100%",
@@ -205,6 +205,72 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
+  },
+
+  // Timer #0ff
+  timerDisplayContainer: {
+    padding: 20,
+    borderRadius: 10,
+    height: 300,
+  },
+  timerDisplay: {
+    marginTop: 60,
+    fontSize: 50,
+    fontWeight: "bold",
+    color: Colors.textColor,
+    textAlign: "center",
+    marginVertical: 20,
+  },
+  timerButtonContainer: {
+    marginTop: 50,
+    flexDirection: "row",
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  timerRunningButtonContainer: {
+    flexDirection: "row",
+    padding: 10,
+    width: "100%",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  timerButton: {
+    backgroundColor: Colors.buttonColor,
+    padding: 20,
+    margin: 10,
+    borderRadius: 50,
+    width: 100,
+    height: 100,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  timerButtonDelete: {
+    backgroundColor: "#c91d1d",
+    padding: 20,
+    margin: 10,
+    borderRadius: 50,
+    width: 100,
+    height: 100,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  timerButtonText: {
+    color: Colors.textColor,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  hmsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: 340,
+    marginVertical: 10,
+  },
+  hmsText: {
+    fontSize: 22,
+    fontWeight: "bold",
+    justifyContent: "space-between",
+    color: Colors.textColor,
   },
 });
 
