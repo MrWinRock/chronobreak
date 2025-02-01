@@ -33,6 +33,11 @@ const SelectTimer = ({ onTimeChange }: { onTimeChange: (hour: number, minute: nu
 
     return (
         <View style={styles.timeSelectorContainer}>
+            <View style={styles.hmsContainer}>
+                <Text style={styles.hmsText}>Hours</Text>
+                <Text style={styles.hmsText}>Minutes</Text>
+                <Text style={styles.hmsText}>Seconds</Text>
+            </View>
             <View style={styles.wheelContainer}>
                 <ScrollView
                     ref={hourScrollRef}
