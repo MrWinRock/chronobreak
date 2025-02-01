@@ -10,6 +10,13 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingBottom: 150,
   },
+  stopwatchContainer: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: Colors.backgroundColor,
+    paddingTop: 50,
+    paddingBottom: 50,
+  },
   button: {
     backgroundColor: Colors.buttonColor,
   },
@@ -118,7 +125,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 
-  // Time Zone Converter #0ff
+  // Time Zone Converter #
   picker: {
     height: 50,
     width: "100%",
@@ -257,6 +264,91 @@ const styles = StyleSheet.create({
   },
   timerButtonText: {
     color: Colors.textColor,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+
+  // Stopwatch #0ff
+  timerContainer: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 200,
+    marginBottom: 50,
+    borderRadius: 10,
+  },
+  timer: {
+    fontSize: 70,
+    fontWeight: "700",
+    fontFamily: "Inter-Bold",
+    color: "#fff",
+    textAlign: "left",
+  },
+  buttonRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    alignItems: "center",
+    marginBottom: 50,
+  },
+  stopwatchButton: {
+    paddingVertical: 15,
+    paddingHorizontal: 25,
+    borderRadius: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 100,
+    height: 100,
+    marginHorizontal: 10,
+  },
+  startButton: {
+    backgroundColor: "#1E90FF",
+  },
+  stopButton: {
+    backgroundColor: "#FF4500",
+  },
+  lapButton: {
+    backgroundColor: "#A9D7E7CC",
+  },
+  resetButton: {
+    backgroundColor: "#A9D7E7CC",
+  },
+  buttonStart: {
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#fff",
+  },
+  buttonLap: {
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#3d6a76",
+  },
+  lapContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginVertical: 10,
+  },
+  lapText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  separator: {
+    height: 1,
+    width: "100%",
+    backgroundColor: "#fff",
+    marginTop: 5,
+  },
+  separatorContainer: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  flatListContainer: {
+    width: "100%",
     fontSize: 16,
     fontWeight: "bold",
   },
