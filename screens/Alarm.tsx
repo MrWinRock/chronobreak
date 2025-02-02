@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigation, NavigationProp, useIsFocused } from '@react-navigation/native';
-import { View, Text, ScrollView, TouchableOpacity, RefreshControl } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, RefreshControl, Modal } from 'react-native';
 import styles from '../styles/styles';
 import { Ionicons } from '@expo/vector-icons';
 import { getAllCitiesTime } from '../utils/TimeUtils';
 import { defaultCity } from '../data/cities';
+import AddAlarm from './AddAlarm';
 
 type RootStackParamList = {
-    AddClock: { fromScreen: string };
+    AddAlarm: { fromScreen: string };
 };
 
 export default function Alarm() {
@@ -18,6 +19,7 @@ export default function Alarm() {
     const [cityTimes, setCityTimes] = useState<Record<string, string | null>>({});
     const [cities, setCities] = useState(defaultCity);
     const isFocused = useIsFocused();
+    const [modalVisible, setModalVisible] = useState(false);
 
     const toggleDeleteButtons = () => {
         setShowDeleteButtons(!showDeleteButtons);
@@ -34,7 +36,6 @@ export default function Alarm() {
         loadCityTimes();
         setRefreshing(false);
     }, [loadCityTimes]);
-    
 
     return (
         <ScrollView
@@ -44,7 +45,7 @@ export default function Alarm() {
             <View style={styles.headerContainer}>
                 <Text style={styles.header}>Alarm</Text>
                 <View style={{ flexDirection: 'row' }}>
-                    <TouchableOpacity style={styles.headerButton} onPress={() => navigation.navigate('AddClock', { fromScreen: 'WorldClock' })}>
+                    <TouchableOpacity style={styles.headerButton} onPress={() => setModalVisible(true)}>
                         <Ionicons name="add-outline" style={styles.headerButtonText}></Ionicons>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.headerButton} onPress={toggleDeleteButtons}>
@@ -52,7 +53,16 @@ export default function Alarm() {
                     </TouchableOpacity>
                 </View>
             </View>
-            {/* ส่วนอื่น ๆ ของ Alarm */}
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                }}
+            >
+                <AddAlarm navigation={navigation} closeModal={() => setModalVisible(false)} />
+            </Modal>
         </ScrollView>
     );
 }
