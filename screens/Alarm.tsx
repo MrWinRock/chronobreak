@@ -38,23 +38,26 @@ export default function Alarm() {
         const checkAlarms = async () => {
             const now = new Date();
             const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            console.log("Now: ", currentTime);
             alarms.forEach(async (alarm) => {
                 if (alarm.isEnabled && alarm.time === currentTime) {
+                    console.log('Alarm triggered: ', alarm);
                     if (alarm.sound) {
+                        console.log('Playing sound');
                         await playSound();
+                        alarm.isEnabled = false;
                     }
-                    // Add vibration logic here if needed
                 }
             });
         };
 
-        const interval = setInterval(checkAlarms, 60000); // Check every minute
+        const interval = setInterval(checkAlarms, 10000); // [TBD] Check every 10 seconds
         return () => clearInterval(interval);
     }, [alarms]);
 
     const playSound = async () => {
         const { sound } = await Audio.Sound.createAsync(
-            require('../assets/notification.mp3') // Replace with your sound file
+            require('../assets/alarm-sound.mp3')
         );
         setSound(sound);
         await sound.playAsync();
@@ -65,6 +68,7 @@ export default function Alarm() {
         const newAlarms = [...alarms, newAlarm];
         setAlarms(newAlarms);
         await AsyncStorage.setItem('alarms', JSON.stringify(newAlarms));
+        console.log('Alarm saved: ', newAlarm);
     };
 
     const toggleDeleteButtons = () => {
@@ -85,13 +89,14 @@ export default function Alarm() {
             alarm.time === time ? { ...alarm, isEnabled: !alarm.isEnabled } : alarm
         );
         setAlarms(newAlarms);
+        console.log('Alarms: ', newAlarms);
         await AsyncStorage.setItem('alarms', JSON.stringify(newAlarms));
     };
 
     return (
         <ScrollView
             style={styles.container}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => {}} />}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { }} />}
         >
             <View style={styles.headerContainer}>
                 <Text style={styles.header}>Alarm</Text>
