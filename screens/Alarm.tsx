@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigation, NavigationProp, useIsFocused } from '@react-navigation/native';
 import { View, Text, ScrollView, TouchableOpacity, RefreshControl, Modal } from 'react-native';
 import styles from '../styles/styles';
 import { Ionicons } from '@expo/vector-icons';
-import { getAllCitiesTime } from '../utils/TimeUtils';
-import { defaultCity } from '../data/cities';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import AddAlarm from './AddAlarm';
+import AlarmCard from '../components/AlarmCard';
+import { Audio } from 'expo-av';
 
 type RootStackParamList = {
     AddAlarm: { fromScreen: string };
@@ -14,33 +15,83 @@ type RootStackParamList = {
 export default function Alarm() {
     const [refreshing, setRefreshing] = useState(false);
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-    const [deletingCity, setDeletingCity] = useState<string | null>(null);
-    const [showDeleteButtons, setShowDeleteButtons] = useState(false);
-    const [cityTimes, setCityTimes] = useState<Record<string, string | null>>({});
-    const [cities, setCities] = useState(defaultCity);
+    const [alarms, setAlarms] = useState<{ time: string, name: string, sound: boolean, vibration: boolean, isEnabled: boolean }[]>([]);
     const isFocused = useIsFocused();
     const [modalVisible, setModalVisible] = useState(false);
+    const [deletingAlarm, setDeletingAlarm] = useState<string | null>(null);
+    const [showDeleteButtons, setShowDeleteButtons] = useState(false);
+    const [sound, setSound] = useState<Audio.Sound | null>(null);
+
+    useEffect(() => {
+        const loadAlarms = async () => {
+            const storedAlarms = await AsyncStorage.getItem('alarms');
+            if (storedAlarms) {
+                setAlarms(JSON.parse(storedAlarms));
+            }
+        };
+        if (isFocused) {
+            loadAlarms();
+        }
+    }, [isFocused]);
+
+    useEffect(() => {
+        const checkAlarms = async () => {
+            const now = new Date();
+            const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            alarms.forEach(async (alarm) => {
+                if (alarm.isEnabled && alarm.time === currentTime) {
+                    if (alarm.sound) {
+                        await playSound();
+                    }
+                    // Add vibration logic here if needed
+                }
+            });
+        };
+
+        const interval = setInterval(checkAlarms, 60000); // Check every minute
+        return () => clearInterval(interval);
+    }, [alarms]);
+
+    const playSound = async () => {
+        const { sound } = await Audio.Sound.createAsync(
+            require('../assets/notification.mp3') // Replace with your sound file
+        );
+        setSound(sound);
+        await sound.playAsync();
+    };
+
+    const saveAlarm = async (time: string, name: string, sound: boolean, vibration: boolean) => {
+        const newAlarm = { time, name, sound, vibration, isEnabled: false };
+        const newAlarms = [...alarms, newAlarm];
+        setAlarms(newAlarms);
+        await AsyncStorage.setItem('alarms', JSON.stringify(newAlarms));
+    };
 
     const toggleDeleteButtons = () => {
         setShowDeleteButtons(!showDeleteButtons);
-        setDeletingCity(null);
+        setDeletingAlarm(null);
     };
 
-    const loadCityTimes = useCallback(() => {
-        const times = getAllCitiesTime(cities);
-        setCityTimes(times);
-    }, [cities]);
+    const handleDeleteAlarm = async (time: string) => {
+        const newAlarms = alarms.filter((alarm) => alarm.time !== time);
+        await AsyncStorage.setItem('alarms', JSON.stringify(newAlarms));
+        setAlarms(newAlarms);
+        setDeletingAlarm(null);
+        setShowDeleteButtons(false);
+    };
 
-    const onRefresh = useCallback(() => {
-        setRefreshing(true);
-        loadCityTimes();
-        setRefreshing(false);
-    }, [loadCityTimes]);
+    const toggleAlarm = async (time: string) => {
+        const newAlarms = alarms.map((alarm) =>
+            alarm.time === time ? { ...alarm, isEnabled: !alarm.isEnabled } : alarm
+        );
+        setAlarms(newAlarms);
+        await AsyncStorage.setItem('alarms', JSON.stringify(newAlarms));
+    };
 
     return (
         <ScrollView
             style={styles.container}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => {}} />}
         >
             <View style={styles.headerContainer}>
                 <Text style={styles.header}>Alarm</Text>
@@ -53,6 +104,20 @@ export default function Alarm() {
                     </TouchableOpacity>
                 </View>
             </View>
+            {alarms.map((alarm, index) => (
+                <AlarmCard
+                    key={index}
+                    time={alarm.time}
+                    name={alarm.name}
+                    sound={alarm.sound}
+                    vibration={alarm.vibration}
+                    deleting={deletingAlarm === alarm.time}
+                    onConfirmDelete={() => handleDeleteAlarm(alarm.time)}
+                    showDeleteButton={showDeleteButtons}
+                    isEnabled={alarm.isEnabled}
+                    toggleSwitch={() => toggleAlarm(alarm.time)}
+                />
+            ))}
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -61,7 +126,7 @@ export default function Alarm() {
                     setModalVisible(!modalVisible);
                 }}
             >
-                <AddAlarm navigation={navigation} closeModal={() => setModalVisible(false)} />
+                <AddAlarm navigation={navigation} closeModal={() => setModalVisible(false)} saveAlarm={saveAlarm} />
             </Modal>
         </ScrollView>
     );
