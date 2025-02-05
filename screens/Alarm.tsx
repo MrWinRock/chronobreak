@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigation, NavigationProp, useIsFocused } from '@react-navigation/native';
-import { View, Text, ScrollView, TouchableOpacity, RefreshControl, Modal } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, RefreshControl, Modal, Vibration } from 'react-native';
 import styles from '../styles/styles';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -39,19 +39,26 @@ export default function Alarm() {
             const now = new Date();
             const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
             console.log("Now: ", currentTime);
-            alarms.forEach(async (alarm) => {
+            const updatedAlarms = [...alarms];
+            for (const alarm of updatedAlarms) {
                 if (alarm.isEnabled && alarm.time === currentTime) {
                     console.log('Alarm triggered: ', alarm);
+                    alarm.isEnabled = false;
                     if (alarm.sound) {
                         console.log('Playing sound');
                         await playSound();
-                        alarm.isEnabled = false;
+                    }
+                    if (alarm.vibration) {
+                        console.log('Vibrating');
+                        Vibration.vibrate([1000, 1000, 1000, 1000]);
                     }
                 }
-            });
+            }
+            setAlarms(updatedAlarms);
+            await AsyncStorage.setItem('alarms', JSON.stringify(updatedAlarms));
         };
 
-        const interval = setInterval(checkAlarms, 10000); // [TBD] Check every 10 seconds
+        const interval = setInterval(checkAlarms, 5000); // [TBD] Check every 5 seconds
         return () => clearInterval(interval);
     }, [alarms]);
 
@@ -96,7 +103,7 @@ export default function Alarm() {
     return (
         <ScrollView
             style={styles.container}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { }} />}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => {}} />}
         >
             <View style={styles.headerContainer}>
                 <Text style={styles.header}>Alarm</Text>
