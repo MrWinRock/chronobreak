@@ -19,7 +19,7 @@ export default function AlarmNavigator() {
             }}
         >
             <Stack.Screen name="Alarm" component={Alarm} options={{ title: 'Alarm' }} />
-            <Stack.Screen name="AddAlarm" component={AddAlarm} options={{ title: 'Add Alarm' }} />
+            <Stack.Screen name="CreateAlarm" component={AddAlarm} options={{ title: 'Create Alarm' }} />
         </Stack.Navigator>
     );
 }

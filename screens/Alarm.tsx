@@ -23,6 +23,17 @@ export default function Alarm() {
     const [sound, setSound] = useState<Audio.Sound | null>(null);
 
     useEffect(() => {
+        const refreshControl = async () => {
+            setRefreshing(true);
+            const storedAlarms = await AsyncStorage.getItem('alarms');
+            if (storedAlarms) {
+                setAlarms(JSON.parse(storedAlarms));
+            }
+            setRefreshing(false);
+        };
+    }, []);
+
+    useEffect(() => {
         const loadAlarms = async () => {
             const storedAlarms = await AsyncStorage.getItem('alarms');
             if (storedAlarms) {
@@ -35,30 +46,33 @@ export default function Alarm() {
     }, [isFocused]);
 
     useEffect(() => {
+        let previousMinute = new Date().getMinutes();
+
         const checkAlarms = async () => {
             const now = new Date();
             const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-            console.log("Now: ", currentTime);
-            const updatedAlarms = [...alarms];
-            for (const alarm of updatedAlarms) {
-                if (alarm.isEnabled && alarm.time === currentTime) {
-                    console.log('Alarm triggered: ', alarm);
-                    alarm.isEnabled = false;
-                    if (alarm.sound) {
-                        console.log('Playing sound');
-                        await playSound();
-                    }
-                    if (alarm.vibration) {
-                        console.log('Vibrating');
-                        Vibration.vibrate([1000, 1000, 1000, 1000]);
+            const currentMinute = now.getMinutes();
+
+            if (currentMinute !== previousMinute) {
+                const updatedAlarms = [...alarms];
+                for (const alarm of updatedAlarms) {
+                    if (alarm.isEnabled && alarm.time === currentTime) {
+                        alarm.isEnabled = false;
+                        if (alarm.sound) {
+                            await playSound();
+                        }
+                        if (alarm.vibration) {
+                            Vibration.vibrate([1000, 1000, 1000, 1000]);
+                        }
                     }
                 }
+                setAlarms(updatedAlarms);
+                await AsyncStorage.setItem('alarms', JSON.stringify(updatedAlarms));
+                previousMinute = currentMinute;
             }
-            setAlarms(updatedAlarms);
-            await AsyncStorage.setItem('alarms', JSON.stringify(updatedAlarms));
         };
 
-        const interval = setInterval(checkAlarms, 5000); // [TBD] Check every 5 seconds
+        const interval = setInterval(checkAlarms, 1000);
         return () => clearInterval(interval);
     }, [alarms]);
 
@@ -75,7 +89,6 @@ export default function Alarm() {
         const newAlarms = [...alarms, newAlarm];
         setAlarms(newAlarms);
         await AsyncStorage.setItem('alarms', JSON.stringify(newAlarms));
-        console.log('Alarm saved: ', newAlarm);
     };
 
     const toggleDeleteButtons = () => {
@@ -96,14 +109,13 @@ export default function Alarm() {
             alarm.time === time ? { ...alarm, isEnabled: !alarm.isEnabled } : alarm
         );
         setAlarms(newAlarms);
-        console.log('Alarms: ', newAlarms);
         await AsyncStorage.setItem('alarms', JSON.stringify(newAlarms));
     };
 
     return (
         <ScrollView
             style={styles.container}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => {}} />}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { RefreshControl }} />}
         >
             <View style={styles.headerContainer}>
                 <Text style={styles.header}>Alarm</Text>

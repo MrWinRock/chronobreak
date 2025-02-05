@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { ScrollView, TouchableOpacity, Text, View, TextInput, Switch } from 'react-native';
 import TimeSelector from '../components/TimeSelector';
 import styles from '../styles/styles';
-import { Ionicons } from '@expo/vector-icons';
 
-export default function AddAlarm({ navigation, closeModal, saveAlarm }: any) {
+export default function AddAlarm({ closeModal, saveAlarm }: any) {
     const [time, setTime] = useState({ hour: 0, minute: 0 });
     const [alarmName, setAlarmName] = useState('');
-    const [alarmSound, setAlarmSound] = useState(false);
-    const [vibration, setVibration] = useState(false);
+    const [alarmSound, setAlarmSound] = useState(true);
+    const [vibration, setVibration] = useState(true);
 
     const handleSave = () => {
         const formattedTime = `${time.hour.toString().padStart(2, '0')}:${time.minute.toString().padStart(2, '0')}`;
@@ -32,9 +31,9 @@ export default function AddAlarm({ navigation, closeModal, saveAlarm }: any) {
             </View>
             <View style={{ padding: 25 }}>
                 <TimeSelector onTimeChange={handleTimeChange} />
-                <View style={{ marginBottom: 50}} />
+                <View style={{ marginBottom: 50 }} />
                 <View style={styles.settingsContainer}>
-                    <TextInput 
+                    <TextInput
                         style={styles.aminputTransparent}
                         placeholder="Alarm name"
                         placeholderTextColor="#B9B9B9"
@@ -48,7 +47,7 @@ export default function AddAlarm({ navigation, closeModal, saveAlarm }: any) {
                             value={alarmSound}
                             onValueChange={setAlarmSound}
                             thumbColor={alarmSound ? "#DCF5FC" : "#f4f3f4"}
-                            trackColor={{ false: "#158DEC", true: "#0166EF" }}
+                            trackColor={{ false: "#767577", true: "#0166EF" }}
                         />
                     </View>
                     <View style={styles.amseparator} />
@@ -61,9 +60,8 @@ export default function AddAlarm({ navigation, closeModal, saveAlarm }: any) {
                             trackColor={{ false: "#767577", true: "#0166EF" }}
                         />
                     </View>
-                    <View style={styles.amseparator} />  
-                    <View style={{ marginBottom: 15 }}/> 
-                                  
+                    <View style={styles.amseparator} />
+                    <View style={{ marginBottom: 15 }} />
                 </View>
             </View>
         </ScrollView>

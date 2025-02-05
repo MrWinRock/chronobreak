@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Switch } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 
 interface AlarmCardProps {
     time: string;
