@@ -29,8 +29,8 @@ const AlarmCard: React.FC<AlarmCardProps> = ({ time, name, sound, vibration, del
                 </View>
             ) : (
                 <Switch
-                    trackColor={{ false: "#868b8f", true: "#0166EF" }}
-                    thumbColor={"#c8e8fb"}
+                    trackColor={{ false: "#868B8F", true: "#0166EF" }}
+                    thumbColor={"#DCF5FC"}
                     onValueChange={toggleSwitch}
                     value={isEnabled}
                 />

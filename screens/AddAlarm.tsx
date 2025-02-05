@@ -47,8 +47,8 @@ export default function AddAlarm({ navigation, closeModal, saveAlarm }: any) {
                         <Switch
                             value={alarmSound}
                             onValueChange={setAlarmSound}
-                            thumbColor={alarmSound ? "#f5dd4b" : "#f4f3f4"}
-                            trackColor={{ false: "#767577", true: "#81b0ff" }}
+                            thumbColor={alarmSound ? "#DCF5FC" : "#f4f3f4"}
+                            trackColor={{ false: "#158DEC", true: "#0166EF" }}
                         />
                     </View>
                     <View style={styles.amseparator} />
@@ -57,8 +57,8 @@ export default function AddAlarm({ navigation, closeModal, saveAlarm }: any) {
                         <Switch
                             value={vibration}
                             onValueChange={setVibration}
-                            thumbColor={vibration ? "#f5dd4b" : "#f4f3f4"}
-                            trackColor={{ false: "#767577", true: "#81b0ff" }}
+                            thumbColor={vibration ? "#DCF5FC" : "#f4f3f4"}
+                            trackColor={{ false: "#767577", true: "#0166EF" }}
                         />
                     </View>
                     <View style={styles.amseparator} />  
