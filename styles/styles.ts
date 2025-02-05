@@ -364,6 +364,85 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     color: Colors.textColor,
   },
+
+  // AddAlarm styles
+  amcontainer: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  amheaderContainer: {
+    padding: 20,
+    backgroundColor: "#4A628A",
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+  },
+  amheader: {
+    fontSize: 24,
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  amheaderButton: {
+    marginLeft: 10,
+  },
+  amheaderButtonText: {
+    fontSize: 24,
+    color: "#fff",
+  },
+  alarmCard: {
+    backgroundColor: "#fff",
+    padding: 20,
+    margin: 10,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  alarmText: {
+    fontSize: 18,
+    color: "#333",
+  },
+  aminput: {
+    height: 40,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    fontSize: 100,
+    color: "#000",
+    marginBottom: 20,
+    backgroundColor: "#fff",
+  },
+  aminputTransparent: {
+    height: 50,
+    borderColor: "#fff",
+    paddingHorizontal: 10,
+    color: "#B9B9B9",
+    marginTop: 5,
+    backgroundColor: "transparent",
+    fontSize: 25,
+  },
+  amseparator: {
+    height: 1,
+    backgroundColor: "#000",
+    marginVertical: 10,
+  },
+  settingsContainer: {
+    backgroundColor: "#DCF5FC",
+    borderRadius: 35,
+    padding: 10,
+  },
+  settingContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 10,
+  },
+  settingText: {
+    fontSize: 25,
+    color: "#000",
+  },
 });
 
 export default styles;

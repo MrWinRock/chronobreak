@@ -6,6 +6,7 @@ import Stopwatch from '../screens/Stopwatch';
 import Alarm from '../screens/Alarm';
 import Timer from '../screens/Timer';
 import WorldClockNavigator from './WorldClockNavigator';
+import AlarmNavigator from './AlarmNavigator';
 import styles from '../styles/styles';
 import TimeZoneNavigator from './TimeZoneNavigator';
 
@@ -56,7 +57,7 @@ export default function MainNavigator() {
             initialRouteName="World Clock"
         >
             <Tab.Screen name="Stopwatch" component={Stopwatch} />
-            <Tab.Screen name="Alarm" component={Alarm} />
+            <Tab.Screen name="Alarm" component={AlarmNavigator} />
             <Tab.Screen name="World Clock" component={WorldClockNavigator} />
             <Tab.Screen name="Timer" component={Timer} />
             <Tab.Screen name="TimeZone" component={TimeZoneNavigator} />
