@@ -2,14 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import styles from '../styles/styles';
 
+const ITEM_HEIGHT = 60;
+const BUFFER_COUNT_HOURS = 24 * 3;
+const BUFFER_COUNT_MINUTES_SECONDS = 60 * 3;
+const CENTER_OFFSET_HOURS = 24;
+const CENTER_OFFSET_MINUTES_SECONDS = 60;
+
 const SelectTimer = ({ onTimeChange }: { onTimeChange: (hour: number, minute: number, second: number) => void }) => {
     const [hour, setHour] = useState(0);
-    const [minute, setMinute] = useState(0);
+    const [minute, setMinute] = useState(10);
     const [second, setSecond] = useState(0);
-
-    const hours = Array.from({ length: 24 }, (_, i) => i);
-    const minutes = Array.from({ length: 60 }, (_, i) => i);
-    const seconds = Array.from({ length: 60 }, (_, i) => i);
 
     const hourScrollRef = useRef<ScrollView>(null);
     const minuteScrollRef = useRef<ScrollView>(null);
@@ -19,16 +21,42 @@ const SelectTimer = ({ onTimeChange }: { onTimeChange: (hour: number, minute: nu
         onTimeChange(hour, minute, second);
     }, [hour, minute, second]);
 
+    useEffect(() => {
+        hourScrollRef.current?.scrollTo({ y: (CENTER_OFFSET_HOURS + hour) * ITEM_HEIGHT, animated: false });
+        minuteScrollRef.current?.scrollTo({ y: (CENTER_OFFSET_MINUTES_SECONDS + minute) * ITEM_HEIGHT, animated: false });
+        secondScrollRef.current?.scrollTo({ y: (CENTER_OFFSET_MINUTES_SECONDS + second) * ITEM_HEIGHT, animated: false });
+    }, []);
+
     const handleScroll = (event: any, type: 'hour' | 'minute' | 'second') => {
         const { contentOffset } = event.nativeEvent;
-        const index = Math.round(contentOffset.y / 60);
+        const index = Math.round(contentOffset.y / ITEM_HEIGHT);
+
         if (type === 'hour') {
-            setHour(hours[index % 24]);
+            let adjustedIndex = ((index % 24) + 24) % 24;
+            setHour(adjustedIndex);
+
+            if (index < CENTER_OFFSET_HOURS - 12 || index > CENTER_OFFSET_HOURS + 12) {
+                hourScrollRef.current?.scrollTo({ y: (CENTER_OFFSET_HOURS + adjustedIndex) * ITEM_HEIGHT, animated: false });
+            }
         } else if (type === 'minute') {
-            setMinute(minutes[index % 60]);
+            let adjustedIndex = ((index % 60) + 60) % 60;
+            setMinute(adjustedIndex);
+
+            if (index < CENTER_OFFSET_MINUTES_SECONDS - 30 || index > CENTER_OFFSET_MINUTES_SECONDS + 30) {
+                minuteScrollRef.current?.scrollTo({ y: (CENTER_OFFSET_MINUTES_SECONDS + adjustedIndex) * ITEM_HEIGHT, animated: false });
+            }
         } else {
-            setSecond(seconds[index % 60]);
+            let adjustedIndex = ((index % 60) + 60) % 60;
+            setSecond(adjustedIndex);
+
+            if (index < CENTER_OFFSET_MINUTES_SECONDS - 30 || index > CENTER_OFFSET_MINUTES_SECONDS + 30) {
+                secondScrollRef.current?.scrollTo({ y: (CENTER_OFFSET_MINUTES_SECONDS + adjustedIndex) * ITEM_HEIGHT, animated: false });
+            }
         }
+    };
+
+    const generateLoopedArray = (max: number, bufferCount: number) => {
+        return Array.from({ length: bufferCount }, (_, i) => (i % max));
     };
 
     return (
@@ -42,14 +70,14 @@ const SelectTimer = ({ onTimeChange }: { onTimeChange: (hour: number, minute: nu
                 <ScrollView
                     ref={hourScrollRef}
                     style={styles.scrollView}
-                    snapToInterval={60}
+                    snapToInterval={ITEM_HEIGHT}
                     decelerationRate="fast"
                     showsVerticalScrollIndicator={false}
                     onScroll={(event) => handleScroll(event, 'hour')}
                     scrollEventThrottle={16}
                     contentContainerStyle={styles.scrollViewContent}
                 >
-                    {hours.concat(hours).map((h, index) => (
+                    {generateLoopedArray(24, BUFFER_COUNT_HOURS).map((h, index) => (
                         <View key={index} style={styles.scrollItem}>
                             <Text style={index % 24 === hour ? styles.selectedItemText : styles.itemText}>
                                 {h.toString().padStart(2, '0')}
@@ -61,14 +89,14 @@ const SelectTimer = ({ onTimeChange }: { onTimeChange: (hour: number, minute: nu
                 <ScrollView
                     ref={minuteScrollRef}
                     style={styles.scrollView}
-                    snapToInterval={60}
+                    snapToInterval={ITEM_HEIGHT}
                     decelerationRate="fast"
                     showsVerticalScrollIndicator={false}
                     onScroll={(event) => handleScroll(event, 'minute')}
                     scrollEventThrottle={16}
                     contentContainerStyle={styles.scrollViewContent}
                 >
-                    {minutes.concat(minutes).map((m, index) => (
+                    {generateLoopedArray(60, BUFFER_COUNT_MINUTES_SECONDS).map((m, index) => (
                         <View key={index} style={styles.scrollItem}>
                             <Text style={index % 60 === minute ? styles.selectedItemText : styles.itemText}>
                                 {m.toString().padStart(2, '0')}
@@ -80,14 +108,14 @@ const SelectTimer = ({ onTimeChange }: { onTimeChange: (hour: number, minute: nu
                 <ScrollView
                     ref={secondScrollRef}
                     style={styles.scrollView}
-                    snapToInterval={60}
+                    snapToInterval={ITEM_HEIGHT}
                     decelerationRate="fast"
                     showsVerticalScrollIndicator={false}
                     onScroll={(event) => handleScroll(event, 'second')}
                     scrollEventThrottle={16}
                     contentContainerStyle={styles.scrollViewContent}
                 >
-                    {seconds.concat(seconds).map((s, index) => (
+                    {generateLoopedArray(60, BUFFER_COUNT_MINUTES_SECONDS).map((s, index) => (
                         <View key={index} style={styles.scrollItem}>
                             <Text style={index % 60 === second ? styles.selectedItemText : styles.itemText}>
                                 {s.toString().padStart(2, '0')}
