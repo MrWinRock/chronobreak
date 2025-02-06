@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
   },
   timerButtonText: {
     color: Colors.textColor,
-    fontSize: 20,
+    fontSize: 14,
     fontWeight: "bold",
   },
 
