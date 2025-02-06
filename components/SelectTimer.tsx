@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import styles from '../styles/styles';
 
@@ -25,35 +25,35 @@ const SelectTimer = ({ onTimeChange }: { onTimeChange: (hour: number, minute: nu
         hourScrollRef.current?.scrollTo({ y: (CENTER_OFFSET_HOURS + hour) * ITEM_HEIGHT, animated: false });
         minuteScrollRef.current?.scrollTo({ y: (CENTER_OFFSET_MINUTES_SECONDS + minute) * ITEM_HEIGHT, animated: false });
         secondScrollRef.current?.scrollTo({ y: (CENTER_OFFSET_MINUTES_SECONDS + second) * ITEM_HEIGHT, animated: false });
-    }, []); // Ensures initial scroll position is set when component mounts
+    }, []);
 
-    const handleScroll = useCallback((event: any, type: 'hour' | 'minute' | 'second') => {
+    const handleScroll = (event: any, type: 'hour' | 'minute' | 'second') => {
         const { contentOffset } = event.nativeEvent;
         const index = Math.round(contentOffset.y / ITEM_HEIGHT);
 
         if (type === 'hour') {
-            const adjustedIndex = ((index % 24) + 24) % 24;
-            if (adjustedIndex !== hour) setHour(adjustedIndex);
+            let adjustedIndex = ((index % 24) + 24) % 24;
+            setHour(adjustedIndex);
 
             if (index < CENTER_OFFSET_HOURS - 12 || index > CENTER_OFFSET_HOURS + 12) {
                 hourScrollRef.current?.scrollTo({ y: (CENTER_OFFSET_HOURS + adjustedIndex) * ITEM_HEIGHT, animated: false });
             }
         } else if (type === 'minute') {
-            const adjustedIndex = ((index % 60) + 60) % 60;
-            if (adjustedIndex !== minute) setMinute(adjustedIndex);
+            let adjustedIndex = ((index % 60) + 60) % 60;
+            setMinute(adjustedIndex);
 
             if (index < CENTER_OFFSET_MINUTES_SECONDS - 30 || index > CENTER_OFFSET_MINUTES_SECONDS + 30) {
                 minuteScrollRef.current?.scrollTo({ y: (CENTER_OFFSET_MINUTES_SECONDS + adjustedIndex) * ITEM_HEIGHT, animated: false });
             }
         } else {
-            const adjustedIndex = ((index % 60) + 60) % 60;
-            if (adjustedIndex !== second) setSecond(adjustedIndex);
+            let adjustedIndex = ((index % 60) + 60) % 60;
+            setSecond(adjustedIndex);
 
             if (index < CENTER_OFFSET_MINUTES_SECONDS - 30 || index > CENTER_OFFSET_MINUTES_SECONDS + 30) {
                 secondScrollRef.current?.scrollTo({ y: (CENTER_OFFSET_MINUTES_SECONDS + adjustedIndex) * ITEM_HEIGHT, animated: false });
             }
         }
-    }, [hour, minute, second]); // Dependency array ensures no unnecessary state changes
+    };
 
     const generateLoopedArray = (max: number, bufferCount: number) => {
         return Array.from({ length: bufferCount }, (_, i) => (i % max));

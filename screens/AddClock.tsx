@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../styles/styles';
 import { citiesData } from '../data/cities';
 
-export default function AddClock({ navigation, closeModal, route }: any) {
+export default function AddClock({ navigation, route }: any) {
     const [addedCities, setAddedCities] = useState<{ city: string, country: string }[]>([]);
     const { fromScreen } = route.params;
 
@@ -25,21 +25,18 @@ export default function AddClock({ navigation, closeModal, route }: any) {
     const addCity = async (city: string, country: string) => {
         const newCities = [...addedCities, { city, country }];
         await AsyncStorage.setItem('addedCities', JSON.stringify(newCities));
-        closeModal();
         navigation.navigate(fromScreen, { city, country });
     };
 
     return (
-        <ScrollView style={[styles.amcontainer, { backgroundColor: '#4A628A', borderTopLeftRadius: 50, borderTopRightRadius: 50, paddingTop: 30 }]}>
-            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 20 }}>
-                <TouchableOpacity style={{ backgroundColor: "transparent" }} onPress={closeModal}>
-                    <Text style={{ fontSize: 36, color: "#fff", fontWeight: 500, textAlign: "right" }}>Cancel</Text>
-                </TouchableOpacity>
-            </View>
+        <ScrollView style={styles.container}>
+            <TouchableOpacity style={{ backgroundColor: "transparent", paddingRight: 20 }} onPress={() => navigation.goBack()}>
+                <Text style={{ fontSize: 36, color: "#fff", fontWeight: 500, textAlign: "right" }}>Cancel</Text>
+            </TouchableOpacity>
             <View style={{ marginBottom: 100 }}>
                 {availableCities.map((city, index) => (
                     <TouchableOpacity key={index} style={styles.cityItem} onPress={() => addCity(city.city, city.country)}>
-                        <Text style={{ fontSize: 26, fontWeight: "bold", padding: 5, color: "#fff" }}>{city.city}, {city.name}</Text>
+                        <Text style={styles.cityName}>{city.city}, {city.name}</Text>
                     </TouchableOpacity>
                 ))}
             </View>

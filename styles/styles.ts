@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
   },
   timeSelectorContainer: {
     padding: 10,
-    alignItems: "center",
+    borderRadius: 10,
   },
   wheelContainer: {
     flexDirection: "row",
@@ -190,8 +190,6 @@ const styles = StyleSheet.create({
     height: 60,
     justifyContent: "center",
     alignItems: "center",
-    margin: 0,
-    padding: 0,
   },
   selectedItemText: {
     fontSize: 50,
@@ -203,13 +201,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#a3cae0",
   },
-  colonContainer: {
-    height: 80,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   colon: {
-    fontSize: 60,
+    fontSize: 40,
     color: "#fff",
     fontWeight: "900",
     marginHorizontal: 10,
@@ -271,7 +264,7 @@ const styles = StyleSheet.create({
   },
   timerButtonText: {
     color: Colors.textColor,
-    fontSize: 20,
+    fontSize: 14,
     fontWeight: "bold",
   },
 
