@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, RefreshControl } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, RefreshControl, Modal } from 'react-native';
 import { useNavigation, NavigationProp, useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAllCitiesTime } from '../utils/TimeUtils';
@@ -7,6 +7,7 @@ import { defaultCity } from '../data/cities';
 import ClockCard from '../components/ClockCard';
 import { Ionicons } from '@expo/vector-icons';
 import styles from '../styles/styles';
+import AddClock from './AddClock';
 
 type RootStackParamList = {
     AddClock: { fromScreen: string };
@@ -15,6 +16,7 @@ type RootStackParamList = {
 export default function WorldClock() {
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const isFocused = useIsFocused();
+    const [modalVisible, setModalVisible] = useState(false);
     const [cityTimes, setCityTimes] = useState<Record<string, string | null>>({});
     const [refreshing, setRefreshing] = useState(false);
     const [cities, setCities] = useState(defaultCity);
@@ -65,7 +67,7 @@ export default function WorldClock() {
             <View style={styles.headerContainer}>
                 <Text style={styles.header}>World Clock</Text>
                 <View style={{ flexDirection: 'row' }}>
-                    <TouchableOpacity style={styles.headerButton} onPress={() => navigation.navigate('AddClock', { fromScreen: 'WorldClock' })}>
+                    <TouchableOpacity style={styles.headerButton} onPress={() => setModalVisible(true)}>
                         <Ionicons name="add-outline" style={styles.headerButtonText}></Ionicons>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.headerButton} onPress={toggleDeleteButtons}>
@@ -83,6 +85,14 @@ export default function WorldClock() {
                     showDeleteButton={showDeleteButtons}
                 />
             ))}
+            <Modal
+                animationType='slide'
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(!modalVisible)}
+            >
+                <AddClock navigation={navigation} closeModal={() => setModalVisible(false)} route={{ params: { fromScreen: 'WorldClock' } }} />
+            </Modal>
             <View style={{ height: 100 }} />
         </ScrollView>
     );

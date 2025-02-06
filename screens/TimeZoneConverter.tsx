@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Modal } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getTimeByCity } from '../utils/TimeUtils';
 import TimeSelector from '../components/TimeSelector';
 import { Ionicons } from '@expo/vector-icons';
+import AddClock from './AddClock';
 import styles from '../styles/styles';
 
 export default function TimeZoneConverter({ navigation }: { navigation: any }) {
@@ -11,6 +12,8 @@ export default function TimeZoneConverter({ navigation }: { navigation: any }) {
     const [selectedCity, setSelectedCity] = useState<string | null>('Bangkok');
     const [selectedTime, setSelectedTime] = useState<Date>(new Date());
     const [convertedTimes, setConvertedTimes] = useState<Record<string, string | null>>({});
+    const [modalVisible, setModalVisible] = useState(false);
+
     useEffect(() => {
         const loadCities = async () => {
             const storedCities = await AsyncStorage.getItem('addedCities');
@@ -50,7 +53,7 @@ export default function TimeZoneConverter({ navigation }: { navigation: any }) {
             </View>
             <View style={styles.timezoneMain}>
                 <Text style={{ fontSize: 28, fontWeight: "bold", color: "#fff" }}>Bangkok</Text>
-                <TouchableOpacity style={styles.headerButton} onPress={() => navigation.navigate('AddClock', { fromScreen: 'TimeZoneConverter' })}>
+                <TouchableOpacity style={styles.headerButton} onPress={() => setModalVisible(true)}>
                     <Ionicons name="add-outline" style={styles.headerButtonText}></Ionicons>
                 </TouchableOpacity>
             </View>
@@ -67,6 +70,14 @@ export default function TimeZoneConverter({ navigation }: { navigation: any }) {
                     ))}
                 </ScrollView>
             </View>
+            <Modal
+                animationType='slide'
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(!modalVisible)}
+            >
+                <AddClock navigation={navigation} closeModal={() => setModalVisible(false)} route={{ params: { fromScreen: 'TimeZoneConverter' } }} />
+            </Modal>
         </View>
     );
 }
